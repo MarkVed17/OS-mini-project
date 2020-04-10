@@ -1,6 +1,6 @@
 #include<stdio.h>
 char Uname[50],passsword[50],name[50];  // Declared globally because we want to store the registration details
-int PQ[100];  // Our priority Queue.
+int PQ[100],sub[100],asno[100],dat[100],count=0;  // Our priority,subject,assignment no,date queue
 void Register()  //for students
 {
     printf("Enter your Username: ");
@@ -26,7 +26,7 @@ void loginT()   //for teachers (Login for all the subject teachers is common and
 	}while(count<=3);   // Only 3 attempts allowed.
 	printf("You have been blocked.\n");
 }
-void loginS()   //for student (Currently therer is only one student login.)
+void loginS()   //for student (Currently there is only one student login.)
 {
 	char User[50],pass[50],count=0;
 	do{
@@ -37,23 +37,29 @@ void loginS()   //for student (Currently therer is only one student login.)
 	  if(User==Uname&&pass==password)
 	  	Student();
 	  else
-	  	printf("Invalid Username or password\n");  //Calling teacher function on sucessful login.
+	  	printf("Invalid Username or password\n");  //Calling Student function on sucessful login.
 	  count++;
 	}while(count<=3);
 	printf("You have been blocked.\n");
 }
 void Teacher()
 {
-	int ch,an;  //ch= choice, an=assignment number
-	char dd;    // The date of submission
+	int ch,an,p,acsat;  //ch= choice, an=assignment number
+	char dd[15];    // The date of submission
 	printf("\t\tWelcome Teacher\t\t");
+	do
+	{
 	printf("\n\nPlease select your Subject.\n1.OS 2.CG 3.AOA 4.COA 5.AM 6.Python");
 	scanf("%d",&ch);
     printf("\nPlease enter the assignment number: ");
     scanf("%d",&an);
     printf("\nPlease enter the deadline for submission (date format: DD-MM-YYYY): ");
-    gets(dd);   // We need to write a separate function to separate the DD,MM and YYYY.
-    Enqueue(ch,an,dd);
+    gets(dd);
+	acdat=Dsep(dd);   // We need to write a separate function to separate the DD,MM and YYYY.
+    Enqueue(ch,an,acdat);
+    printf("Do you want to update more information\n1.Yes\n2.No");
+    scanf("%d",&p);
+    }while(p==1);//iteration for updating
 }
 void Student()
 {
@@ -69,12 +75,16 @@ void Student()
     else if(sc==3)
     	loginS();     // We can replace this by exit to quit form the program
     else
-    	prinf("\nInvalid choise.");
+    	prinf("\nInvalid choice.");
      }while(true);
 }
-void Enqueue()
+void Enqueue(int ch,int an ,int acdat)
 {
-	/*We need to complete this funtion*/
+	sub[count]=ch;
+	asno[count]=an;
+	dat[count]=acdat;
+	count++;
+	/**/
 }
 void Disp()
 {
@@ -85,9 +95,27 @@ void ChangeP()
 	/*We change the priority order and then rearrange the subjects according to the students
 	subject preference and the date of submission*/
 }
-void Dateseparate
-{
+int Dsep(int dd)
+{int c1=0,c2=0,c3=0,day[50],mon[50],yr[50],i=0,j=0;
 	/* we need to separate the date into date,month and year. This will be used to set the priority in the PQ[]*/
+    	while(dd[i]!='-')
+    	{
+    		day[c1]=dd[i];
+    		c1++;
+    		i++;
+		}i++;
+        while(dd[i]!='-')
+    	{
+    		mon[c2]=dd[i];
+    		c2++;
+    		i++;
+		}i++
+		while(dd[i]!='\0')
+    	{
+    		yr[c3]=dd[i];
+    		c3++;
+    		i++;
+		}		
+    return day[0]*10+day[1];		
 }
 // Thats it. if something else is missing, plz add it
-
