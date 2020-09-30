@@ -1,2 +1,3 @@
 # OS MINI-PROJECT
-Trial PRs
+#Hello WORLD!
+Just getting started with Open Source Journey
